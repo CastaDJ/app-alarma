@@ -1,6 +1,5 @@
-import { AlarmClock } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
+import { AlarmList } from "./_components/alarm-list";
 import { SettingsMenu } from "./_components/settings-menu";
 
 export default function Home() {
@@ -17,19 +16,7 @@ export default function Home() {
         />
         <SettingsMenu />
       </header>
-      <main className="py-6 px-6 flex flex-col gap-4 items-center justify-center flex-1">
-        <AlarmClock className="size-16" strokeWidth={1.25} />
-        <h1 className="font-bold text-xl text-center">Crea tu primera alarma</h1>
-        <p className="text-sm text-gray-500 text-center max-w-56">
-          Oprime el botón de abajo para crear tu primera alarma
-        </p>
-        <Link
-          href="/alarms/new"
-          className="mt-2 px-4 py-4 bg-primary-50 w-full text-white font-bold text-sm rounded-[14px] hover:bg-primary-100 active:bg-primary-200 text-center"
-        >
-          Crear alarma
-        </Link>
-      </main>
+      <AlarmList />
     </>
   );
 }
