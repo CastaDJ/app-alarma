@@ -36,14 +36,14 @@ export default function NewAlarmPage() {
 
   function handleSave() {
     addAlarm({ time, repeat, sound, vibration, game });
-    router.push("/");
+    router.push("/home");
   }
 
   return (
     <>
       <header className="w-full relative p-6 font-bold flex items-center justify-between">
         <Link
-          href="/"
+          href="/home"
           aria-label="Volver"
           className="p-2 -ml-2 text-black hover:bg-[#C0C0C0] active:bg-[#A0A0A0] rounded-lg"
         >
@@ -62,7 +62,7 @@ export default function NewAlarmPage() {
           />
           <DropdownMenuContent align="end" className="w-auto">
             <DropdownMenuItem>
-              <Link href="/">Descartar alarma</Link>
+              <Link href="/home">Descartar alarma</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

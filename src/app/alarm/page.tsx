@@ -46,7 +46,7 @@ export default function AlarmPage() {
         Empezar juego
       </Link>
       <Link
-        href="/"
+        href="/home"
         className="-mt-2 px-4 py-4 bg-[#EFEFEC] w-full font-bold text-sm rounded-[14px] border border-solid border-hard-gray hover:bg-[#D9D9D9] active:bg-[#C0C0C0] text-center"
       >
         Posponer

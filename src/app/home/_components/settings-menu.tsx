@@ -24,7 +24,7 @@ export function SettingsMenu() {
       />
       <DropdownMenuContent align="end" className="w-auto">
         <DropdownMenuItem>
-          <Link href="/login">Cerrar sesión</Link>
+          <Link href="/">Cerrar sesión</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

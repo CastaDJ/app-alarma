@@ -5,7 +5,7 @@ import { formatTime } from "@/lib/time";
 import { cn } from "@/lib/utils";
 import { AlarmClock } from "lucide-react";
 import Link from "next/link";
-import { gameLabel } from "../alarms/_data";
+import { gameLabel } from "../../alarms/_data";
 
 const createLinkClassName =
   "mt-2 px-4 py-4 bg-primary-50 w-full text-white font-bold text-sm rounded-[14px] hover:bg-primary-100 active:bg-primary-200 text-center";

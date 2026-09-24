@@ -11,7 +11,7 @@ export function LoginForm() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    router.push("/");
+    router.push("/home");
   }
 
   return (
@@ -57,7 +57,7 @@ export function LoginForm() {
       </label>
 
       <Link
-        href="/login"
+        href="/"
         className="text-xs font-bold self-end hover:underline"
       >
         ¿Olvidaste tu contraseña?
@@ -74,7 +74,7 @@ export function LoginForm() {
 
       <p className="text-xs text-gray-500 text-center mb-5">
         ¿No tienes cuenta?{" "}
-        <Link href="/login" className="font-bold text-primary-50 hover:underline">
+        <Link href="/" className="font-bold text-primary-50 hover:underline">
           Crear cuenta
         </Link>
       </p>

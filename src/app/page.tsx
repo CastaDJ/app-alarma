@@ -1,22 +1,19 @@
-import Image from "next/image";
-import { AlarmList } from "./_components/alarm-list";
-import { SettingsMenu } from "./_components/settings-menu";
+import { AlarmClock } from "lucide-react";
+import { LoginForm } from "./_components/login-form";
 
-export default function Home() {
+export default function LoginPage() {
   return (
-    <>
-      <header className="w-full flex items-center justify-between px-6 pt-6">
-        <Image
-          src="/avatar.png"
-          alt="Avatar del usuario"
-          width={44}
-          height={44}
-          className="rounded-full size-11 object-cover"
-          priority
-        />
-        <SettingsMenu />
+    <main className="py-6 pt-20 px-6 flex flex-col gap-6.25 items-center flex-1">
+      <AlarmClock className="size-16" strokeWidth={1.25} />
+      <header className="flex flex-col gap-2 items-center">
+        <h1 className="font-bold text-[28px] text-primary-50 text-center">
+          Bienvenido de nuevo
+        </h1>
+        <p className="text-sm text-gray-500 text-center">
+          Siempre es un gusto tenerte de vuelta
+        </p>
       </header>
-      <AlarmList />
-    </>
+      <LoginForm />
+    </main>
   );
 }

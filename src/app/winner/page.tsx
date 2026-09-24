@@ -35,7 +35,7 @@ export default function WinnerPage() {
         </p>
       </section>
       <Link
-        href="/"
+        href="/home"
         className="mt-6.25 px-4 py-4 bg-primary-50 w-full text-white rounded-[14px] hover:bg-primary-100 active:bg-primary-200 text-center"
       >
         Listo

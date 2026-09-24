@@ -28,7 +28,7 @@ export function DropdownMenuBasic() {
           </DropdownMenuItem>
         )}
         <DropdownMenuItem>
-          <Link href="/">Perder el juego</Link>
+          <Link href="/home">Perder el juego</Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
