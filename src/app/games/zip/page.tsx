@@ -6,16 +6,17 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const mapa = Array.from({ length: 6 }).map(() =>
-  Array.from<"sun" | "moon" | undefined>({ length: 6 }),
+  Array.from<number | undefined>({ length: 6 }),
 );
 
-mapa[0][3] = "sun";
-mapa[0][4] = "sun";
-mapa[1][4] = "sun";
-mapa[2][3] = "sun";
-mapa[3][5] = "moon";
-mapa[4][0] = "sun";
-mapa[5][5] = "moon";
+mapa[3][2] = 1;
+mapa[2][3] = 2;
+mapa[3][4] = 3;
+mapa[2][1] = 4;
+mapa[4][0] = 5;
+mapa[4][5] = 6;
+mapa[1][0] = 7;
+mapa[1][5] = 8;
 
 export default function TangoPage() {
   const [counter, setCounter] = useState(0);
@@ -50,22 +51,11 @@ export default function TangoPage() {
             {mapa.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="p-1">
-                    {cell === "sun" ? (
-                      <Image
-                        src="/icons/sun.png"
-                        alt="sun"
-                        width={40}
-                        height={40}
-                      />
-                    ) : cell === "moon" ? (
-                      <Image
-                        className="p-1"
-                        src="/icons/moon.png"
-                        alt="moon"
-                        width={40}
-                        height={40}
-                      />
+                  <td key={cellIndex} className="p-2">
+                    {cell ? (
+                      <span className="rounded-full size-full flex items-center justify-center bg-black text-white text-lg font-semibold z-10 relative">
+                        {cell}
+                      </span>
                     ) : null}
                   </td>
                 ))}
@@ -74,17 +64,7 @@ export default function TangoPage() {
           </tbody>
         </table>
 
-        <span className="text-black text-lg font-bold absolute top-18.25 right-3.75">
-          =
-        </span>
-        <span className="text-black text-lgl font-bold absolute top-2 left-31.5">
-          ×
-        </span>
-        <span className="text-black text-lgl font-bold absolute bottom-8 left-4">
-          ×
-        </span>
-
-        {/* <svg
+        <svg
           className="absolute inset-0 size-full pointer-events-none"
           width={482}
           height={482}
@@ -111,36 +91,62 @@ export default function TangoPage() {
             strokeLinecap="round"
             strokeLinejoin="round"
           ></polyline>
-        </svg> */}
+        </svg>
       </div>
-      <section className="flex items-center gap-4">
-        <button className="w-20.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center">
-          <Image src="/icons/sun.png" alt="sun" width={40} height={40} />
-        </button>
-        <button className="w-20.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary active:bg-primary-200 flex justify-center">
-          <Image
-            className="p-1"
-            src="/icons/moon.png"
-            alt="moon"
-            width={40}
-            height={40}
-          />
-        </button>
-      </section>
-      <section>
-        <h2 className="text-primary text-[11px] font-bold">¿Cómo se juega?</h2>
-        <ul className="list-disc pl-6 text-[11px]">
-          <li>
-            Rellena la cuadrícula de modo que cada celda contenga ☀️ o 🌙.
-          </li>
-          <li>
-            No puede haber más de dos ☀️ o 🌙 juntos, ni en vertical ni en
-            horizontal.
-          </li>
-          <li>Cada fila y columna deben tener el mismo número de ☀️ y 🌙.</li>
-          <li>Las celdas separadas por = deben ser del mismo tipo.</li>
-          <li>Las celdas separadas por × deben ser de distinto tipo</li>
-        </ul>
+      <section className="flex gap-3 text-black items-center">
+        <div className="flex flex-col items-center text-center leading-5 gap-3">
+          <article className="relative flex items-center gap-3 w-fit">
+            <span className="rounded-full size-9 flex items-center justify-center bg-black text-white text-lg font-semibold border-6 border-[#2145cd] border-solid box-content">
+              1
+            </span>
+            <span className="rounded-full size-9 flex items-center justify-center bg-black text-white text-lg font-semibold border-6 border-[#2145cd] border-solid box-content">
+              2
+            </span>
+            <span className="rounded-full size-9 flex items-center justify-center bg-black text-white text-lg font-semibold border-6 border-[#2145cd] border-solid box-content">
+              3
+            </span>
+            <hr className="border-12 border-[#2145cd] border-solid box-content absolute top-2.5 w-[80%] left-1 -z-1" />
+          </article>
+          <p>
+            Conecta los <br />
+            puntos en orden
+          </p>
+        </div>
+        <div className="flex flex-col items-center text-center leading-5 gap-3">
+          <article className="relative flex items-center gap-3 w-fit">
+            <table className="[&_td]:border [&_td]:border-hard-gray [&_td]:size-4.5 bg-white [&_td]:border-solid relative">
+              <tbody>
+                {Array.from({ length: 3 }).map((_, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {Array.from({ length: 3 }).map((_, cellIndex) => (
+                      <td key={cellIndex} className="p-2" />
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <svg
+              className="absolute inset-0 size-full pointer-events-none"
+              width={55}
+              height={55}
+              viewBox="0 0 55 55"
+            >
+              <polyline
+                points="10,10 10,45 27.5,45 27.5,10 45,10 45,45"
+                fill="none"
+                stroke="#5e3ec1"
+                strokeWidth="10"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              ></polyline>
+            </svg>
+          </article>
+          <p>
+            Rellena todas <br />
+            las celdas
+          </p>
+        </div>
       </section>
     </main>
   );
