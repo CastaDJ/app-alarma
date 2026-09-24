@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { games } from "../_data";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { cn } from "cn";
 import { RotateCcw, X } from "lucide-react";
 

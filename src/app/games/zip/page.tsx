@@ -3,7 +3,6 @@
 import { usePathname } from "next/navigation";
 import { games } from "../_data";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 
 const mapa = Array.from({ length: 6 }).map(() =>
   Array.from<number | undefined>({ length: 6 }),

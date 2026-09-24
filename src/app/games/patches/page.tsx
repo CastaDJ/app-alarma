@@ -3,22 +3,24 @@
 import { usePathname } from "next/navigation";
 import { games } from "../_data";
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import { cn } from "cn";
 
 const mapa = Array.from({ length: 6 }).map(() =>
-  Array.from<"sun" | "moon" | undefined>({ length: 6 }),
+  Array.from<
+    { type: "square" | "long" | "high" | "any"; size?: number } | undefined
+  >({ length: 6 }),
 );
 
-mapa[0][3] = "sun";
-mapa[0][4] = "sun";
-mapa[1][4] = "sun";
-mapa[2][3] = "sun";
-mapa[3][5] = "moon";
-mapa[4][0] = "sun";
-mapa[5][5] = "moon";
+mapa[2][2] = { type: "high" };
+mapa[2][3] = { type: "square" };
+mapa[3][1] = { type: "any", size: 8 };
+mapa[3][4] = { type: "any", size: 4 };
+mapa[4][0] = { type: "any", size: 4 };
+mapa[4][5] = { type: "any", size: 8 };
 
 export default function TangoPage() {
   const [counter, setCounter] = useState(0);
+  let squareIndex = 0;
 
   useEffect(() => {
     const interval = setInterval(() => setCounter((prev) => prev + 1), 1000);
@@ -44,106 +46,166 @@ export default function TangoPage() {
           Pista
         </button>
       </section>
-      <div className="relative pointer-events-none select-none">
-        <table className="[&_td]:border [&_td]:border-hard-gray [&_td]:size-11 bg-white [&_td]:border-dotted max-w-78 relative">
+      <div className="relative">
+        <table className="[&_td]:size-11 bg-white max-w-78 relative border border-hard-gray border-solid rounded-lg">
           <tbody>
             {mapa.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="p-1">
-                    {cell === "sun" ? (
-                      <Image
-                        src="/icons/sun.png"
-                        alt="sun"
-                        width={40}
-                        height={40}
-                      />
-                    ) : cell === "moon" ? (
-                      <Image
-                        className="p-1"
-                        src="/icons/moon.png"
-                        alt="moon"
-                        width={40}
-                        height={40}
-                      />
-                    ) : null}
+                  <td
+                    key={cellIndex}
+                    className={cn(
+                      "p-1 border border-hard-gray border-dotted",
+                      rowIndex === 0 && cellIndex === 0 && "rounded-tl-lg",
+                      rowIndex === 0 && cellIndex === 5 && "rounded-tr-lg",
+                      rowIndex === 5 && cellIndex === 0 && "rounded-bl-lg",
+                      rowIndex === 5 && cellIndex === 5 && "rounded-br-lg",
+                    )}
+                  >
+                    <div className="p-1 size-full flex items-center justify-center relative">
+                      {cell && <Square {...cell} colorIndex={squareIndex++} />}
+                    </div>
                   </td>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
-
-        <span className="text-black text-lg font-bold absolute top-18.25 right-3.75">
-          =
-        </span>
-        <span className="text-black text-lgl font-bold absolute top-2 left-31.5">
-          ×
-        </span>
-        <span className="text-black text-lgl font-bold absolute bottom-8 left-4">
-          ×
-        </span>
-
-        {/* <svg
-          className="absolute inset-0 size-full pointer-events-none"
-          width={482}
-          height={482}
-          viewBox="0 0 482 482"
-        >
-          <defs>
-            <linearGradient
-              id="line"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-              gradientUnits="objectBoundingBox"
-            >
-              <stop offset="0%" stopColor="#0448d4"></stop>
-              <stop offset="100%" stopColor="#b134af"></stop>
-            </linearGradient>
-          </defs>
-          <polyline
-            points="201,281 201,201 281,201 281,281 361,281 361,361 121,361 121,201 41,201 41,441 441,441 441,201 361,201 361,121 41,121 41,41 441,41 441,121"
-            fill="none"
-            stroke="url(#line)"
-            strokeWidth="40"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></polyline>
-        </svg> */}
       </div>
-      <section className="flex items-center gap-4">
-        <button className="w-20.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center">
-          <Image src="/icons/sun.png" alt="sun" width={40} height={40} />
-        </button>
-        <button className="w-20.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary-50 active:bg-primary-200 flex justify-center">
-          <Image
-            className="p-1"
-            src="/icons/moon.png"
-            alt="moon"
-            width={40}
-            height={40}
-          />
-        </button>
-      </section>
-      <section>
-        <h2 className="text-primary-50 text-[11px] font-bold">
-          ¿Cómo se juega?
-        </h2>
-        <ul className="list-disc pl-6 text-[11px]">
-          <li>
-            Rellena la cuadrícula de modo que cada celda contenga ☀️ o 🌙.
-          </li>
-          <li>
-            No puede haber más de dos ☀️ o 🌙 juntos, ni en vertical ni en
-            horizontal.
-          </li>
-          <li>Cada fila y columna deben tener el mismo número de ☀️ y 🌙.</li>
-          <li>Las celdas separadas por = deben ser del mismo tipo.</li>
-          <li>Las celdas separadas por × deben ser de distinto tipo</li>
-        </ul>
+
+      <section className="flex gap-5 text-black items-center">
+        <div className="flex flex-col items-center text-center leading-5 gap-3">
+          <article className="relative flex items-center gap-3 w-fit">
+            <table className="[&_td]:border [&_td]:border-hard-gray [&_td]:size-11 bg-white [&_td]:border-solid relative">
+              <tbody>
+                {[
+                  [{ type: "square" as const, size: 4 }, null],
+                  [null, null],
+                ].map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, cellIndex) => (
+                      <td
+                        key={cellIndex}
+                        className={cn(
+                          "p-1 border border-hard-gray border-dotted",
+                          rowIndex === 0 && cellIndex === 0 && "rounded-tl-lg",
+                          rowIndex === 0 && cellIndex === 5 && "rounded-tr-lg",
+                          rowIndex === 5 && cellIndex === 0 && "rounded-bl-lg",
+                          rowIndex === 5 && cellIndex === 5 && "rounded-br-lg",
+                        )}
+                      >
+                        <div className="p-1 size-full flex items-center justify-center relative z-1">
+                          {cell && (
+                            <Square {...cell} colorIndex={squareIndex++} />
+                          )}
+                        </div>
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="absolute inset-1 size-[90%] pointer-events-none border-2 rounded-sm border-solid border-[#fda330] bg-[#fda330]/50" />
+          </article>
+        </div>
+        <div className="flex flex-col items-center text-center leading-5 gap-3">
+          <section className="grid grid-cols-[auto_1fr] gap-3 justify-items-center text-xs font-semibold">
+            <Square type="square" colorIndex={7} />
+            <p className="justify-self-start self-center">Cuadrado</p>
+            <Square type="high" colorIndex={7} />
+            <p className="justify-self-start self-center">
+              Rectángulo vertical
+            </p>
+            <Square type="long" colorIndex={7} />
+            <p className="justify-self-start self-center">
+              Rectángulo horizontal
+            </p>
+            <div className="relative">
+              <Square type="any" colorIndex={7} />
+            </div>
+            <p className="justify-self-start self-center">Cualquiera</p>
+          </section>
+        </div>
       </section>
     </main>
   );
+}
+
+const colors = [
+  "bg-[#028c9c]", // Green
+  "bg-[#7243ff]", // Purple
+  "bg-[#d4b064]", // Yellow
+  "bg-[#6bc7fc]", // Light Blue
+  "bg-[#ef6961]", // Red
+  "bg-[#f69766]", // Orange
+  "bg-[#fda330]", // Dark Orange
+  "bg-[#b9b9b5]", // Gray
+];
+
+function Square({
+  type,
+  size,
+  colorIndex: index,
+}: {
+  type?: "square" | "long" | "high" | "any";
+  size?: number;
+  colorIndex: number;
+}) {
+  switch (type) {
+    case "square":
+      return (
+        <div
+          className={cn(
+            "size-7 rounded-xs flex items-center justify-center text-white font-semibold",
+            colors[index],
+          )}
+        >
+          {size}
+        </div>
+      );
+    case "long":
+      return (
+        <div
+          className={cn(
+            "h-5 w-7 rounded-xs flex items-center justify-center text-white font-semibold",
+            colors[index],
+          )}
+        >
+          {size}
+        </div>
+      );
+    case "high":
+      return (
+        <div
+          className={cn(
+            "h-7 w-5 rounded-xs flex items-center justify-center text-white font-semibold",
+            colors[index],
+          )}
+        >
+          {size}
+        </div>
+      );
+    case "any":
+      return (
+        <>
+          <div
+            className={cn(
+              "relative z-1 h-5 w-7 rounded-xs flex items-center justify-center text-white font-semibold",
+              colors[index],
+            )}
+          >
+            {size}
+          </div>
+          <div
+            className={cn(
+              "inset-1/2 -translate-x-1/2 -translate-y-1/2 absolute h-7 w-5 rounded-xs flex items-center justify-center text-white font-semibold",
+              colors[index],
+            )}
+          />
+        </>
+      );
+    default:
+      return null;
+  }
 }
