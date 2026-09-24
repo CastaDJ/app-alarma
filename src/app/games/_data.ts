@@ -5,6 +5,10 @@ export const games = {
     name: "Tango",
     instructions: "Llena el tablero con el mismo número de ☀️ y 🌙",
   },
+  rulette: {
+    name: "Elige un juego",
+    instructions: "Se escogerá un juego al azar de la ruleta",
+  },
   patches: {
     name: "Patches",
     instructions: "Rellena los cuadros siguiendo las reglas",

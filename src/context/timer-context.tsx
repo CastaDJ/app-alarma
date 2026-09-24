@@ -1,12 +1,5 @@
 "use client";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  PropsWithChildren,
-} from "react";
-import { usePathname } from "next/navigation";
+import { createContext, useContext, useState, PropsWithChildren } from "react";
 
 const TimerContextR = createContext<{
   counter: number;

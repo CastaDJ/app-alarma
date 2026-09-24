@@ -11,7 +11,7 @@ export default function GamesLayout({ children }: LayoutProps<"/games">) {
     <>
       <header className="w-full relative p-6 font-bold h-6.75">
         <h1 className="text-[22px] text-primary-50 text-center">
-          {games[game].name}
+          {games[game ?? "rulette"].name}
         </h1>
         <DropdownMenuBasic />
       </header>

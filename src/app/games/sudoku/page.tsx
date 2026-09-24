@@ -1,8 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { games } from "../_data";
-import { useState, useEffect } from "react";
 import { cn } from "cn";
 import { RotateCcw, X } from "lucide-react";
 import { useTimer } from "../_components/useTimer";

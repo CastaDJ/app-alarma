@@ -1,8 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { games } from "../_data";
-import { useState, useEffect } from "react";
 import { useTimer } from "../_components/useTimer";
 
 const mapa = Array.from({ length: 6 }).map(() =>
