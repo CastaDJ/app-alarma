@@ -39,7 +39,11 @@ export function OptionRow({
       <DropdownMenuContent align="end" className="w-auto min-w-40">
         <DropdownMenuRadioGroup value={value} onValueChange={onChange}>
           {options.map((option) => (
-            <DropdownMenuRadioItem key={option.value} value={option.value}>
+            <DropdownMenuRadioItem
+              key={option.value}
+              value={option.value}
+              closeOnClick
+            >
               {option.label}
             </DropdownMenuRadioItem>
           ))}
