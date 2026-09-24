@@ -4,18 +4,17 @@ import { usePathname } from "next/navigation";
 import { games } from "../_data";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { cn } from "cn";
+import { RotateCcw, X } from "lucide-react";
 
-const mapa = Array.from({ length: 6 }).map(() =>
-  Array.from<"sun" | "moon" | undefined>({ length: 6 }),
-);
-
-mapa[0][3] = "sun";
-mapa[0][4] = "sun";
-mapa[1][4] = "sun";
-mapa[2][3] = "sun";
-mapa[3][5] = "moon";
-mapa[4][0] = "sun";
-mapa[5][5] = "moon";
+const mapa = [
+  [4, 2, 6, 5, 3, 1],
+  [5, 3, 1, 2, 6, 4],
+  [1, 4, 5, 3, 2, 6],
+  [3, 6, 2, 1, 4, 5],
+  [6, 1, 3, 4, 5, 2],
+  [2, 5, 4, 6, 1, null],
+];
 
 export default function TangoPage() {
   const [counter, setCounter] = useState(0);
@@ -45,102 +44,65 @@ export default function TangoPage() {
         </button>
       </section>
       <div className="relative pointer-events-none select-none">
-        <table className="[&_td]:border [&_td]:border-hard-gray [&_td]:size-11 bg-white [&_td]:border-dotted max-w-78 relative">
+        <table className="[&_td]:size-11 bg-white [&_td]:border-solid max-w-78 relative">
           <tbody>
             {mapa.map((row, rowIndex) => (
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
-                  <td key={cellIndex} className="p-1">
-                    {cell === "sun" ? (
-                      <Image
-                        src="/icons/sun.png"
-                        alt="sun"
-                        width={40}
-                        height={40}
-                      />
-                    ) : cell === "moon" ? (
-                      <Image
-                        className="p-1"
-                        src="/icons/moon.png"
-                        alt="moon"
-                        width={40}
-                        height={40}
-                      />
-                    ) : null}
+                  <td
+                    key={cellIndex}
+                    className={cn(
+                      "p-1 border border-hard-gray",
+                      cellIndex === 2 && "border-r-2 border-r-neutral-500",
+                      cellIndex === 0 && "border-l-2 border-l-neutral-500",
+                      cellIndex === 5 && "border-r-2 border-r-neutral-500",
+                      rowIndex === 0 && "border-t-2 border-t-neutral-500",
+                      rowIndex === 1 && "border-b-2 border-b-neutral-500",
+                      rowIndex === 3 && "border-b-2 border-b-neutral-500",
+                      rowIndex === 5 && "border-b-2 border-b-neutral-500",
+                      cellIndex === 5 &&
+                        rowIndex === 5 &&
+                        "p-0 border-3 border-green-800",
+                    )}
+                  >
+                    <span className="rounded-full size-full flex items-center justify-center text-neutral-400 text-lg z-10 relative">
+                      {cell}
+                      {cellIndex === 5 && rowIndex === 5 && (
+                        <span className="size-full bg-green-300/20" />
+                      )}
+                    </span>
                   </td>
                 ))}
               </tr>
             ))}
           </tbody>
         </table>
-
-        <span className="text-black text-lg font-bold absolute top-18.25 right-3.75">
-          =
-        </span>
-        <span className="text-black text-lgl font-bold absolute top-2 left-31.5">
-          ×
-        </span>
-        <span className="text-black text-lgl font-bold absolute bottom-8 left-4">
-          ×
-        </span>
-
-        {/* <svg
-          className="absolute inset-0 size-full pointer-events-none"
-          width={482}
-          height={482}
-          viewBox="0 0 482 482"
-        >
-          <defs>
-            <linearGradient
-              id="line"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="1"
-              gradientUnits="objectBoundingBox"
-            >
-              <stop offset="0%" stopColor="#0448d4"></stop>
-              <stop offset="100%" stopColor="#b134af"></stop>
-            </linearGradient>
-          </defs>
-          <polyline
-            points="201,281 201,201 281,201 281,281 361,281 361,361 121,361 121,201 41,201 41,441 441,441 441,201 361,201 361,121 41,121 41,41 441,41 441,121"
-            fill="none"
-            stroke="url(#line)"
-            strokeWidth="40"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          ></polyline>
-        </svg> */}
       </div>
-      <section className="flex items-center gap-4">
-        <button className="w-20.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center">
-          <Image src="/icons/sun.png" alt="sun" width={40} height={40} />
+      <section className="grid grid-cols-4 gap-x-4 gap-y-6 items-center *:h-9">
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          1
         </button>
-        <button className="w-20.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary active:bg-primary-200 flex justify-center">
-          <Image
-            className="p-1"
-            src="/icons/moon.png"
-            alt="moon"
-            width={40}
-            height={40}
-          />
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          2
         </button>
-      </section>
-      <section>
-        <h2 className="text-primary text-[11px] font-bold">¿Cómo se juega?</h2>
-        <ul className="list-disc pl-6 text-[11px]">
-          <li>
-            Rellena la cuadrícula de modo que cada celda contenga ☀️ o 🌙.
-          </li>
-          <li>
-            No puede haber más de dos ☀️ o 🌙 juntos, ni en vertical ni en
-            horizontal.
-          </li>
-          <li>Cada fila y columna deben tener el mismo número de ☀️ y 🌙.</li>
-          <li>Las celdas separadas por = deben ser del mismo tipo.</li>
-          <li>Las celdas separadas por × deben ser de distinto tipo</li>
-        </ul>
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          3
+        </button>
+        <button className="w-15.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary-50 active:bg-primary-200 flex justify-center items-center">
+          <X className="text-primary-50 size-6" strokeWidth={4} />
+        </button>
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          4
+        </button>
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          5
+        </button>
+        <button className="w-15.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center items-center">
+          6
+        </button>
+        <button className="w-15.5 rounded-[11px] bg-primary-100 p-2 cursor-pointer hover:bg-primary-50 active:bg-primary-200 flex justify-center items-center">
+          <RotateCcw className="text-primary-50 size-5" strokeWidth={4} />
+        </button>
       </section>
     </main>
   );

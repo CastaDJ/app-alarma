@@ -117,7 +117,7 @@ export default function TangoPage() {
         <button className="w-20.5 rounded-[11px] bg-[#D9D9D9] p-1 cursor-pointer hover:bg-[#C0C0C0] active:bg-[#A0A0A0] flex justify-center">
           <Image src="/icons/sun.png" alt="sun" width={40} height={40} />
         </button>
-        <button className="w-20.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary active:bg-primary-200 flex justify-center">
+        <button className="w-20.5 rounded-[11px] bg-primary-100 p-1 cursor-pointer hover:bg-primary-50 active:bg-primary-200 flex justify-center">
           <Image
             className="p-1"
             src="/icons/moon.png"
@@ -128,7 +128,9 @@ export default function TangoPage() {
         </button>
       </section>
       <section>
-        <h2 className="text-primary text-[11px] font-bold">¿Cómo se juega?</h2>
+        <h2 className="text-primary-50 text-[11px] font-bold">
+          ¿Cómo se juega?
+        </h2>
         <ul className="list-disc pl-6 text-[11px]">
           <li>
             Rellena la cuadrícula de modo que cada celda contenga ☀️ o 🌙.

@@ -52,11 +52,11 @@ export default function TangoPage() {
               <tr key={rowIndex}>
                 {row.map((cell, cellIndex) => (
                   <td key={cellIndex} className="p-2">
-                    {cell ? (
+                    {cell && (
                       <span className="rounded-full size-full flex items-center justify-center bg-black text-white text-lg font-semibold z-10 relative">
                         {cell}
                       </span>
-                    ) : null}
+                    )}
                   </td>
                 ))}
               </tr>
