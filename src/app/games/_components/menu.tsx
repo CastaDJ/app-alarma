@@ -8,7 +8,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Ellipsis } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 export function DropdownMenuBasic() {
+  const pathName = usePathname().split("/").at(-1);
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -20,7 +23,7 @@ export function DropdownMenuBasic() {
       />
       <DropdownMenuContent>
         <DropdownMenuItem>
-          <Link href="/">Ganar el juego</Link>
+          <Link href={`/winner?game=${pathName}`}>Ganar el juego</Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link href="/">Perder el juego</Link>

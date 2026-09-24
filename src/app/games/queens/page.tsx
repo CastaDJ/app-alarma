@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import { cn } from "cn";
+import { useTimer } from "../_components/useTimer";
 
 const colors = {
   purple: "bg-[#bba3e1]",
@@ -130,18 +131,8 @@ mapa[6][4] = { type: "x", color: "red", borders: borders.r };
 mapa[6][5] = { type: "x", color: "yellow" };
 mapa[6][6] = { type: "queen", color: "yellow" };
 
-export default function TangoPage() {
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => setCounter((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const game = usePathname().split("/").at(-1) ?? "";
-
-  const seconds = counter % 60;
-  const minutes = Math.floor(counter / 60);
+export default function QueensPage() {
+  const { game, seconds, minutes } = useTimer();
 
   return (
     <main className="py-6 px-6 flex flex-col gap-6 items-center">

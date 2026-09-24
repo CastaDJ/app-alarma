@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { games } from "../_data";
 import { useState, useEffect } from "react";
+import { useTimer } from "../_components/useTimer";
 
 const mapa = Array.from({ length: 6 }).map(() =>
   Array.from<number | undefined>({ length: 6 }),
@@ -17,18 +18,8 @@ mapa[4][5] = 6;
 mapa[1][0] = 7;
 mapa[1][5] = 8;
 
-export default function TangoPage() {
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => setCounter((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const game = usePathname().split("/").at(-1) ?? "";
-
-  const seconds = counter % 60;
-  const minutes = Math.floor(counter / 60);
+export default function ZipPage() {
+  const { game, seconds, minutes } = useTimer();
 
   return (
     <main className="py-6 px-6 flex flex-col gap-6 items-center">

@@ -1,9 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { games } from "../_data";
-import { useState, useEffect } from "react";
 import { cn } from "cn";
+import { useTimer } from "../_components/useTimer";
 
 const mapa = Array.from({ length: 6 }).map(() =>
   Array.from<
@@ -18,19 +17,9 @@ mapa[3][4] = { type: "any", size: 4 };
 mapa[4][0] = { type: "any", size: 4 };
 mapa[4][5] = { type: "any", size: 8 };
 
-export default function TangoPage() {
-  const [counter, setCounter] = useState(0);
+export default function PatchesPage() {
+  const { game, seconds, minutes } = useTimer();
   let squareIndex = 0;
-
-  useEffect(() => {
-    const interval = setInterval(() => setCounter((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const game = usePathname().split("/").at(-1) ?? "";
-
-  const seconds = counter % 60;
-  const minutes = Math.floor(counter / 60);
 
   return (
     <main className="py-6 px-6 flex flex-col gap-6 items-center">

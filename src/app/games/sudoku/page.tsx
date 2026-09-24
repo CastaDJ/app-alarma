@@ -5,6 +5,7 @@ import { games } from "../_data";
 import { useState, useEffect } from "react";
 import { cn } from "cn";
 import { RotateCcw, X } from "lucide-react";
+import { useTimer } from "../_components/useTimer";
 
 const mapa = [
   [4, 2, 6, 5, 3, 1],
@@ -15,18 +16,8 @@ const mapa = [
   [2, 5, 4, 6, 1, null],
 ];
 
-export default function TangoPage() {
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => setCounter((prev) => prev + 1), 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const game = usePathname().split("/").at(-1) ?? "";
-
-  const seconds = counter % 60;
-  const minutes = Math.floor(counter / 60);
+export default function SudokuPage() {
+  const { game, seconds, minutes } = useTimer();
 
   return (
     <main className="py-6 px-6 flex flex-col gap-6 items-center">
